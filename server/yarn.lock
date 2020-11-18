@@ -140,6 +140,11 @@ destroy@~1.0.4:
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
   integrity sha1-l4hXRCxEdJ5CBmE+N5RiBYJqvYA=
 
+dotenv@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.2.0.tgz#97e619259ada750eea3e4ea3e26bceea5424b16a"
+  integrity sha512-8sJ78ElpbDJBHNeBzUbUVLsqKdccaa/BXF1uPTw3GrvQTBgrQrtObr2mUrE38vzYd8cEv+m/JBfDLioYcfXoaw==
+
 ecdsa-sig-formatter@1.0.11:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/ecdsa-sig-formatter/-/ecdsa-sig-formatter-1.0.11.tgz#ae0f0fa2d85045ef14a817daa3ce9acd0489e5bf"
@@ -404,9 +409,9 @@ mongoose-legacy-pluralize@1.0.2:
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
 
 mongoose@^5.10.14:
-  version "5.10.14"
-  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.10.14.tgz#2f245ea578c008939599356ff6a8ba7e7643f987"
-  integrity sha512-lG7TCyjGjVPM4R1HWCyWZbdK7hC4MdWRG7P95hDENXSvaLkGLiP7WZbGT83KzLY8+400x1p6C53UALD3MqpsCA==
+  version "5.10.15"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.10.15.tgz#5e559467890e0883d2a1ff0470a7467a1b47e52d"
+  integrity sha512-3QUWCpMRdFCPIBZkjG/B2OkfMY2WLkR+hv335o4T2mn3ta9kx8qVvXeUDojp3OHMxBZVUyCA+hDyyP4/aKmHuA==
   dependencies:
     bson "^1.1.4"
     kareem "2.3.1"
