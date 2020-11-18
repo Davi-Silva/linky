@@ -18,7 +18,7 @@ const RecentlyCreatedLinksList = ({ links }) => {
   return (
     <Wrapper>
       {links.map((link) => (
-        <A href={link.originalURL} target='_blank' rel='noopener noreferrer'>
+        <A href={`${process.env.REACT_APP_FRONT_END_API}/l/${link._id}`} target='_blank' rel='noopener noreferrer'>
           <LinkDiv>
             <CreateAt>{dateFormatter.formatDateFullDate(link.createdAt)}</CreateAt>
             <LinkNewUrl>{`${process.env.REACT_APP_FRONT_END_API}/l/${link._id}`}</LinkNewUrl>
