@@ -2,6 +2,7 @@ import { call, put } from 'redux-saga/effects';
 
 const loginUser = async (userObj) => {
   console.log(process.env)
+  
   const res = await fetch(
     `${process.env.REACT_APP_BACK_END_API}/users/login`,
     {
