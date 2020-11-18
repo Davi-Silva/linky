@@ -1,8 +1,8 @@
 import { call, put } from 'redux-saga/effects';
 
-const createLink = async (url) => {
+const createLink = async (userId, url) => {
   const res = await fetch(
-    `${process.env.REACT_APP_BACK_END_API}/links/create`,
+    `${process.env.REACT_APP_BACK_END_API}/link/create`,
     {
       method: 'POST',
       mode: 'cors',
@@ -11,7 +11,7 @@ const createLink = async (url) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ originalURL: url })
+      body: JSON.stringify({ userId, originalURL: url })
     }
   );
   const data = await res.json();
@@ -20,11 +20,9 @@ const createLink = async (url) => {
 
 export default function* asyncCreateLinkApi(action) {
   try {
-    const response = yield call(createLink, action.payload.url);
-    console.log('response:', response)
+    const response = yield call(createLink, action.payload.userId, action.payload.url);
 
     if (response.status_code === 200) {
-      console.log('done')
       yield put({ type: 'SUCCESS_CREATE_LINK', payload: { data: response } });
     } else {
       yield put({ type: 'FAILURE_CREATE_LINK' });

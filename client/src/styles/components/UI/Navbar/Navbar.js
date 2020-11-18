@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Navbar = styled.nav`
   height: 60px;
@@ -21,9 +22,10 @@ export const Container = styled.div`
   }
 `;
 
-export const Brand = styled.h1`
+export const Brand = styled(Link)`
   font-size: 1.5em;
   color: #fff;
+  text-decoration: none;
 `;
 
 export const Login = styled.button`
@@ -34,7 +36,27 @@ export const Login = styled.button`
   background-color: #33ab33;
   color: #fff;
   cursor: pointer;
-  transition: all .s ease-in-out;
+  transition: all .2s ease-in-out;
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    background-color: #2da22d;
+  }
+  &:active {
+    background-color: #278c27;
+  }
+`;
+
+export const UserButton = styled.button`
+  font-size: 16px;
+  border: 1px solid #47a947;
+  border-radius: 6px;
+  padding: 7px;
+  background-color: #33ab33;
+  color: #fff;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
   &:focus {
     outline: none;
   }

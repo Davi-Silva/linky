@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user/User');
 
@@ -153,13 +154,32 @@ module.exports = {
           errors: ['Invalid token']
         });
       } else {
-        const userObj = decodeToken(token);
 
-        console.log('userObj:', userObj)
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, async (err, user) => {
+          if (err) return {};
 
-        return res.status(200).send({
-          status_code: 200,
-          results: userObj,
+          const userObj = await User.findOne({
+            _id: user.id,
+          })
+
+          if (!userObj) {
+            return res.status(400).send({
+              status_code: 400,
+              results: {},
+              errors: ['User does not exists.']
+            });
+          }
+
+          return res.status(200).send({
+            status_code: 200,
+            results: {
+              _id: userObj._id,
+              names: userObj.names,
+              createdAt: userObj.createdAt,
+              email: userObj.email,
+              username: userObj.username,
+            },
+          });
         });
       }
     } catch (err) {

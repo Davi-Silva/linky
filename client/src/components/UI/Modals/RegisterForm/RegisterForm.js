@@ -103,7 +103,6 @@ const RegisterForm = ({ handleOpenLoginForm, handleOpenResetPasswordForm, handle
     setWarning(false);
     setWarningMessage('');
     if (checkValidForm() && passwordMustMatch()) {
-      console.log(firstName, lastName, email, password, password2)
       const createUserResponse = await registerUser({
         names: {
           firstName,
@@ -119,8 +118,6 @@ const RegisterForm = ({ handleOpenLoginForm, handleOpenResetPasswordForm, handle
         setWarning(true);
         setWarningMessage(createUserResponse.errors[0]);
       }
-
-      console.log('createUserResponse:', createUserResponse)
 
       if (createUserResponse.status_code === 201) {
         handleOpenLoginForm();

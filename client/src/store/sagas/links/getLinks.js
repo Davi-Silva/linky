@@ -1,8 +1,8 @@
 import { call, put } from 'redux-saga/effects';
 
-const getLink = async (id) => {
+const getLinks = async (userId) => {
   const res = await fetch(
-    `${process.env.REACT_APP_BACK_END_API}/links/link?id=${id}`,
+    `${process.env.REACT_APP_BACK_END_API}/links?userId=${userId}`,
     {
       method: 'GET',
       mode: 'cors',
@@ -19,15 +19,15 @@ const getLink = async (id) => {
 
 export default function* asyncGetLinkApi(action) {
   try {
-    const response = yield call(getLink, action.payload.id);
+    const response = yield call(getLinks, action.payload.userId);
 
     if (response.status_code === 200) {
-      yield put({ type: 'SUCCESS_GET_LINK', payload: { data: response } });
+      yield put({ type: 'SUCCESS_GET_LINKS', payload: { data: response.results } });
     } else {
-      yield put({ type: 'FAILURE_GET_LINK' });
+      yield put({ type: 'FAILURE_GET_LINKS' });
     }
   } catch (err) {
     console.error(err)
-    yield put({ type: 'FAILURE_GET_LINK' });
+    yield put({ type: 'FAILURE_GET_LINKS' });
   }
 }

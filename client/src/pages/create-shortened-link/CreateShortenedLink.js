@@ -20,14 +20,15 @@ import {
 } from '../../store/actions/link/link';
 
 const mapStateToProps = (state) => {
-  const { link } = state;
+  const { link, user } = state;
 
   return {
-    link
+    link,
+    user
   }
 }
 
-const CreateShortenedLink = ({ link }) => {
+const CreateShortenedLink = ({ link, user }) => {
   const [urlToShorten, setUrlToShorten] = useState('');
   const [warning, setWarning] = useState(false);
 
@@ -76,11 +77,10 @@ const CreateShortenedLink = ({ link }) => {
     e.preventDefault();
     if (validateInput()) {
       const sanitizedData = sanitizsHtmlAndGetUrl();
-      console.log('sanitizedData:', sanitizedData)
       if (sanitizedData === undefined) {
         setWarning(true);
       } else {
-        dispatch(createLink(sanitizedData));
+        dispatch(createLink(user.data._id, sanitizedData));
       }
     }
   }

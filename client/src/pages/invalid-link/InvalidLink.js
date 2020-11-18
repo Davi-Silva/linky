@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Layout from '../../components/Layout';
 
 const InvalidLink = () => {
   return (
-    <div>
+    <Layout>
       <h1>Invalid Link</h1>
-    </div>
+    </Layout>
   )
 }
 

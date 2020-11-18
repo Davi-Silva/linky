@@ -28,9 +28,16 @@ module.exports = {
 
   create: async (req, res) => {
     try {
-      const { originalURL } = req.body;
+      const { userId, originalURL } = req.body;
 
       let errors = []
+
+      if (userId === undefined) {
+        errors.push('userId is required.')
+      }
+      if (userId.length === 0) {
+        errors.push('userId must be a valid URL.')
+      }
 
       if (originalURL === undefined) {
         errors.push('originalURL is required.')
@@ -48,6 +55,7 @@ module.exports = {
       }
 
       const newLink = new Link({
+        user: userId,
         originalURL
       })
 
@@ -91,8 +99,6 @@ module.exports = {
       const linkObj = await Link.findOne({
         _id: id,
       });
-
-      console.log('linkObj:', linkObj)
 
       if (!linkObj) {
         return res.status(204).send({

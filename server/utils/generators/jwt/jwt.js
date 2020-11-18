@@ -6,7 +6,6 @@ module.exports = {
   }),
   generateRefreshToken: (userId) => jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET),
   decodeToken: (token) => {
-    console.log('token:', token)
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) return {};
       return user;

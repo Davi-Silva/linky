@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import ProtectedRoute from '../utils/protected.route';
 
 import Home from '../pages/home/Home';
 import Link from '../pages/link/Link';
@@ -16,10 +17,10 @@ const Routes = () => {
         <Route path='/' exact component={Home} />
         <Route path='/l/:id' exact component={Link} />
         <Route path='/invalid/link' exact  component={InvalidLink} />
-        <Route path='/account' exact  component={Account} />
-        <Route path='/account/links' exact  component={AccountLinks} />
-        <Route path='/reset-password/:id' exact  component={ResetPassword} />
-        <Route path='/create' exact  component={CreateShortenedLink} />
+        <ProtectedRoute path='/account' exact  component={Account} />
+        <ProtectedRoute path='/account/links' exact  component={AccountLinks} />
+        <ProtectedRoute path='/reset-password/:id' exact  component={ResetPassword} />
+        <ProtectedRoute path='/create' exact  component={CreateShortenedLink} />
       </Switch>
     </BrowserRouter>
   )

@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { index, create, getLink } = require('../../controllers/link/link');
-
-router.get('', index);
+const { create, getLink } = require('../../controllers/link/link');
 
 router.post('/create', create);
 

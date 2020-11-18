@@ -17,7 +17,8 @@ app.use(morgan('dev'));
 app.use(cors());
 
 // API calls
-app.use('/api/links', require('./routers/link/link'));
+app.use('/api/link', require('./routers/link/link'));
+app.use('/api/links', require('./routers/links/links'));
 app.use('/api/users', require('./routers/user/user'));
 
 if (process.env.NODE_ENV === 'production') {

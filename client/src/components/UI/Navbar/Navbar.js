@@ -1,20 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import {
   Brand,
   Container,
   Login,
+  UserButton,
   Navbar
 } from '../../../styles/components/UI/Navbar/Navbar';
 
 import LoginForm from '../Modals/LoginForm/LoginForm';
 import RegisterForm from '../Modals/RegisterForm/RegisterForm';
 import ResetPasswordForm from '../Modals/ResetPasswordForm/ResetPasswordForm';
+import UserModal from '../Modals/UserModal/UserModal';
 
-const NavigationBar = () => {
+const mapStateToProps = (state) => {
+  const { user } = state;
+
+  return {
+    user
+  }
+}
+
+const NavigationBar = ({ user }) => {
   const [openLoginForm, setOpenLoginForm] = useState(false);
   const [openRegisterForm, setOpenRegisterForm] = useState(false);
   const [openResetPassword, setOpenResetPassword] = useState(false);
+  const [openUserModal, setOpenUserModal] = useState(false);
+
+  useEffect(() => {
+    if (!_.isEmpty(user.data)) {
+      closeAllForms();
+    }
+  }, [user]);
 
   const handleToggleLoginForm = () => {
     setOpenLoginForm(!openLoginForm);
@@ -26,6 +45,10 @@ const NavigationBar = () => {
 
   const handleToggleResetPasswordForm = () => {
     setOpenResetPassword(!openResetPassword);
+  }
+
+  const handleToggleUserModalForm = () => {
+    setOpenUserModal(!openUserModal);
   }
 
   const handleOpenLoginForm = () => {
@@ -46,35 +69,57 @@ const NavigationBar = () => {
     setOpenResetPassword(true);
   }
 
+  const closeAllForms = () => {
+    setOpenLoginForm(false);
+    setOpenRegisterForm(false);
+    setOpenResetPassword(false);
+    setOpenUserModal(false);
+  }
+
   return (
     <>
-      {openLoginForm && (
-        <LoginForm
-          handleToggleLoginForm={handleToggleLoginForm}
-          handleOpenRegisterForm={handleOpenRegisterForm}
-          handleOpenResetPasswordForm={handleOpenResetPasswordForm}
-        />
-      )}
-      {openRegisterForm && (
-        <RegisterForm
-          handleOpenLoginForm={handleOpenLoginForm}
-          handleOpenResetPasswordForm={handleOpenResetPasswordForm}
-          handleToggleRegisterForm={handleToggleRegisterForm}
-        />
-      )}
-      {openResetPassword && (
-        <ResetPasswordForm
-          handleOpenLoginForm={handleOpenLoginForm}
-          handleToggleResetPasswordForm={handleToggleResetPasswordForm}
-        />
+      {_.isEmpty(user.data) && (
+        <>
+          {openLoginForm && (
+            <LoginForm
+              handleToggleLoginForm={handleToggleLoginForm}
+              handleOpenRegisterForm={handleOpenRegisterForm}
+              handleOpenResetPasswordForm={handleOpenResetPasswordForm}
+            />
+          )}
+          {openRegisterForm && (
+            <RegisterForm
+              handleOpenLoginForm={handleOpenLoginForm}
+              handleOpenResetPasswordForm={handleOpenResetPasswordForm}
+              handleToggleRegisterForm={handleToggleRegisterForm}
+            />
+          )}
+          {openResetPassword && (
+            <ResetPasswordForm
+              handleOpenLoginForm={handleOpenLoginForm}
+              handleToggleResetPasswordForm={handleToggleResetPasswordForm}
+            />
+          )}
+        </>
       )}
       <Navbar>
         <Container>
           <div>
-            <Brand>Link</Brand>
+            <Brand to='/'>Link</Brand>
           </div>
           <div>
-            <Login onClick={() => handleToggleLoginForm()}>Login</Login>
+            <>
+              {!_.isEmpty(user.data) && !user.loading && !user.error && user.fetched ? (
+                <UserButton onClick={() => handleToggleUserModalForm()}>{`${user.data.names.firstName} ${user.data.names.lastName}`}</UserButton>
+              ) : (
+                <Login onClick={() => handleToggleLoginForm()}>Login</Login>
+              )}
+              {!_.isEmpty(user.data) && (
+                <>
+                  {openUserModal && <UserModal />}
+                </>
+              )}
+            </>
           </div>
         </Container>
       </Navbar>
@@ -82,4 +127,4 @@ const NavigationBar = () => {
   )
 }
 
-export default NavigationBar
+export default connect(mapStateToProps)(NavigationBar);

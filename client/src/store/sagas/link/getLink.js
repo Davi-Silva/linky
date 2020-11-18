@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 
 const getLink = async (id) => {
   const res = await fetch(
-    `${process.env.REACT_APP_BACK_END_API}/links/link?id=${id}`,
+    `${process.env.REACT_APP_BACK_END_API}/link/link?id=${id}`,
     {
       method: 'GET',
       mode: 'cors',

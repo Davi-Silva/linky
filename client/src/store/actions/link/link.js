@@ -7,10 +7,11 @@ export function getLink(id) {
   };
 }
 
-export function createLink(url) {
+export function createLink(userId, url) {
   return {
     type: 'REQUEST_CREATE_LINK',
     payload: {
+      userId,
       url
     }
   };

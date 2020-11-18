@@ -7,3 +7,15 @@ export function loginUser(userObj) {
   };
 }
 
+export function decodeAccessToken() {
+  return {
+    type: 'REQUEST_DECODE_TOKEN',
+  };
+}
+
+export function logoutUser() {
+  return {
+    type: 'REQUEST_LOGOUT_USER',
+  };
+}
+

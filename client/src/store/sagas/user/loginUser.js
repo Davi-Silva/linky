@@ -36,23 +36,19 @@ const getUserInfoFromToken = async (token) => {
   return data;
 }
 
-export default function* asyncRegisterUserApi(action) {
+export default function* asyncLoginUserApi(action) {
   try {
     const response = yield call(loginUser, action.payload.userObj);
 
-    console.log('response:', response)
     if (response.status_code === 200) {
-      console.log('done')
       if (window.localStorage.getItem('accessToken') !== undefined) {
         window.localStorage.removeItem('accessToken');
       }
 
       window.localStorage.setItem('accessToken', response.results.accessToken);
       const finalUserInfoResponse = yield call(getUserInfoFromToken, response.results.accessToken);
-      
-      console.log('finalUserInfoResponse:', finalUserInfoResponse)
 
-      yield put({ type: 'SUCCESS_LOGIN_USER', payload: { data: finalUserInfoResponse } });
+      yield put({ type: 'SUCCESS_LOGIN_USER', payload: { data: finalUserInfoResponse.results } });
     } else {
       yield put({ type: 'FAILURE_GET_LINK' });
     }
