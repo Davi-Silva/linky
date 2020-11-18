@@ -18,6 +18,7 @@ app.use(cors());
 
 // API calls
 app.use('/api/links', require('./routers/link/link'));
+app.use('/api/users', require('./routers/user/user'));
 
 if (process.env.NODE_ENV === 'production') {
   // Serve any static files

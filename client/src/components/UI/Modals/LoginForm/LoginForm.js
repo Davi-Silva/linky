@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {
@@ -9,15 +10,20 @@ import {
   Input,
   Label,
   Submit,
-  Warning
+  Warning,
+  Button
 } from '../../../../styles/components/UI/Modals/LoginForm/LoginForm';
 
-const LoginForm = ({ handleToggleLoginForm }) => {
+import { loginUser } from '../../../../store/actions/user/user';
+
+const LoginForm = ({ handleToggleLoginForm, handleOpenRegisterForm, handleOpenResetPasswordForm }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const [warning, setWarning] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
+
+  const dispatch = useDispatch();
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -38,11 +44,14 @@ const LoginForm = ({ handleToggleLoginForm }) => {
       return false;
     }
   }
+  
 
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = async (e) => {
     e.preventDefault();
+    setWarning(false);
+    setWarningMessage('');
     if (checkValidForm()) {
-      console.log(email, password)
+      dispatch(loginUser({email, password}));
     }
   }
 
@@ -70,6 +79,8 @@ const LoginForm = ({ handleToggleLoginForm }) => {
           {warning && warningMessage.length > 0 && (
             <Warning>{warningMessage}</Warning>
           )}
+          <Button type='button' onClick={() => handleOpenResetPasswordForm()}>Reset Password</Button>
+          <Button type='button' onClick={() => handleOpenRegisterForm()}>Don't have an account yet?</Button>
         </Form>
       </FormDiv>
     </>
@@ -78,6 +89,8 @@ const LoginForm = ({ handleToggleLoginForm }) => {
 
 LoginForm.propTypes = {
   handleToggleLoginForm: PropTypes.func.isRequired,
+  handleOpenRegisterForm: PropTypes.func.isRequired,
+  handleOpenResetPasswordForm: PropTypes.func.isRequired,
 }
 
 export default LoginForm;

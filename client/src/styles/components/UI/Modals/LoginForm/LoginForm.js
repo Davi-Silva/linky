@@ -9,7 +9,7 @@ export const Background = styled.div`
 
 export const FormDiv = styled.div`
   position: fixed;
-  width: 230px;
+  width: 250px;
   display: block;
   top: 50%;
   left: 50%;
@@ -29,6 +29,12 @@ export const Heading = styled.h1`
 
 export const Form = styled.form`
   width: 100%;
+`;
+
+export const SplitDiv = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 4px;
 `;
 
 export const Label = styled.label`
@@ -96,4 +102,17 @@ export const Warning = styled.div`
   font-size: 13px;
   letter-spacing: 1px;
   text-align: center;
+`;
+
+export const Button = styled.button`
+  display: table;
+  margin: 4px auto;
+  background: transparent;
+  border: none;
+  color: #18840f;
+  font-size: 14px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 `;
