@@ -5,6 +5,7 @@ const Account = () => {
   return (
     <Layout>
       <h1>Account</h1>
+      <h2>Main account page</h2>
     </Layout>
   )
 }

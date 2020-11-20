@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Navigationbar from '../components/UI/Navbar/Navbar';
+import Footer from '../components/UI/Footer/Footer';
 import { decodeAccessToken } from '../store/actions/user/user';
 
 import {
@@ -26,6 +27,7 @@ const Layout = ({ children }) => {
       <LayoutDiv>
         {children}
       </LayoutDiv>
+      <Footer />
     </>
   )
 }

@@ -1,4 +1,5 @@
-const { v1, v2, v3, v4, v5 } = require('uuid');
+const { v4 } = require('uuid');
+const crypto = require('crypto');
 
 module.exports = {
   generateRandomUsername: (username) => {
@@ -9,5 +10,9 @@ module.exports = {
       finalUuid += string[0];
     })
     return `${username}-${finalUuid}`;
+  },
+
+  generateUniqueId: (numberOfBytes, encode, subEncode = 36) => {
+    return crypto.randomBytes(numberOfBytes).toString(encode).toString(subEncode);
   }
 }

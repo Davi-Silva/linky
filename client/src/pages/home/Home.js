@@ -1,12 +1,14 @@
 import React from 'react';
 
-import Navigationbar from '../../components/UI/Navbar/Navbar';
 import Layout from '../../components/Layout';
+import Hero from '../../components/UI/Home/Hero/Hero';
+import ShortenerForm from '../../components/UI/Home/ShortenerForm/ShortenerForm';
 
 const Home = () => {
   return (
     <Layout>
-      <h1>Home</h1>
+      <Hero />
+      <ShortenerForm />
     </Layout>
   )
 }

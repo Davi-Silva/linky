@@ -6,6 +6,10 @@ const LinkSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  uniqueId: {
+    type: String,
+    require: true,
+  },
   originalURL: {
     type: String,
     required: true,

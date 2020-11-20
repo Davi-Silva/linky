@@ -20,9 +20,9 @@ const UserModal = () => {
   return (
     <Wrapper>
       <FlexList>
-        <FlexListItem to='/account'>Account</FlexListItem>
+        <FlexListItem to='/account/dashboard'>Account</FlexListItem>
         <FlexListItem to='/account/links'>My Links</FlexListItem>
-        <FlexListItem to='/create'>Create</FlexListItem>
+        <FlexListItem to='/link/create'>Create</FlexListItem>
         <FlexListItemButton onClick={() => handleLogoutUser()} >Sign out</FlexListItemButton>
       </FlexList>
     </Wrapper>

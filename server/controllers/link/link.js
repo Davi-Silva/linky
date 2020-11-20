@@ -1,4 +1,5 @@
-const Link = require('../../models/link/Link')
+const Link = require('../../models/link/Link');
+const { generateUniqueId } = require('../../utils/generators/random/random');
 
 module.exports = {
   index: async (req, res) => {
@@ -54,9 +55,18 @@ module.exports = {
         });
       }
 
+      let uniqueId;
+      let existingLink;
+
+      do {
+        uniqueId = generateUniqueId(4, 'hex', 36);
+        existingLink = await Link.findOne({ uniqueId });
+      } while (existingLink !== null);
+
       const newLink = new Link({
         user: userId,
-        originalURL
+        originalURL,
+        uniqueId
       })
 
       const newLinkObj = await newLink.save();
@@ -97,8 +107,10 @@ module.exports = {
       }
 
       const linkObj = await Link.findOne({
-        _id: id,
+        uniqueId: id,
       });
+
+      console.log('linkObj:', linkObj)
 
       if (!linkObj) {
         return res.status(204).send({

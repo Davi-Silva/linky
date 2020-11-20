@@ -50,7 +50,7 @@ const AdNavbar = ({ link, handleRedirectToURL }) => {
     <Navbar>
       <Container>
         <div>
-          <Brand>Linky</Brand>
+          <Brand to='/'>Linky</Brand>
         </div>
         <div>
           {isStopped ? (

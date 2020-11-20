@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import _ from 'lodash';
 
 import {
@@ -14,6 +14,20 @@ import LoginForm from '../Modals/LoginForm/LoginForm';
 import RegisterForm from '../Modals/RegisterForm/RegisterForm';
 import ResetPasswordForm from '../Modals/ResetPasswordForm/ResetPasswordForm';
 import UserModal from '../Modals/UserModal/UserModal';
+import UserDrawer from '../Modals/UserDrawer/UserDrawer';
+
+const useWindowSize = () => {
+  const [size, setSize] = useState([0, 0]);
+  useLayoutEffect(() => {
+    function updateSize() {
+      setSize([window.innerWidth, window.innerHeight]);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+  return size;
+}
 
 const mapStateToProps = (state) => {
   const { user } = state;
@@ -28,6 +42,28 @@ const NavigationBar = ({ user }) => {
   const [openRegisterForm, setOpenRegisterForm] = useState(false);
   const [openResetPassword, setOpenResetPassword] = useState(false);
   const [openUserModal, setOpenUserModal] = useState(false);
+  const [openUserDrawer, setOpenUserDrawer] = useState(false);
+
+  const [isMobile, setIsMobile] = useState(false);
+  const [width, height] = useWindowSize();
+
+  useEffect(() => {
+    if (openUserModal) {
+      setOpenUserDrawer(openUserModal);
+    } else {
+      setTimeout(() => {
+        setOpenUserDrawer(openUserModal);
+      }, 250);
+    }
+  }, [openUserModal]);
+
+  useEffect(() => {
+    if (width <= 880) {
+      setIsMobile(true)
+    } else {
+      setIsMobile(false)
+    }
+  }, [width])
 
   useEffect(() => {
     if (!_.isEmpty(user.data)) {
@@ -110,15 +146,20 @@ const NavigationBar = ({ user }) => {
           <div>
             <>
               {!_.isEmpty(user.data) && !user.loading && !user.error && user.fetched ? (
-                <UserButton onClick={() => handleToggleUserModalForm()}>{`${user.data.names.firstName} ${user.data.names.lastName}`}</UserButton>
+                <UserButton
+                  onClick={() => handleToggleUserModalForm()}
+                >{`${user.data.names.firstName} ${user.data.names.lastName}`}</UserButton>
               ) : (
-                <Login onClick={() => handleToggleLoginForm()}>Login</Login>
+                <Login
+                  onClick={() => handleToggleLoginForm()}
+                >Login</Login>
               )}
-              {!_.isEmpty(user.data) && (
-                <>
-                  {openUserModal && <UserModal />}
-                </>
-              )}
+              {!_.isEmpty(user.data) && !isMobile && openUserModal && <UserModal />}
+              {isMobile && <UserDrawer
+                openUserModal={openUserModal}
+                openUserDrawer={openUserDrawer}
+                handleToggleUserModalForm={handleToggleUserModalForm}
+              />}
             </>
           </div>
         </Container>

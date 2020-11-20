@@ -4,20 +4,22 @@ import sanitizeHtml from 'sanitize-html';
 import getUrls from 'get-urls';
 import _ from 'lodash';
 
-import Layout from '../../components/Layout';
-import RecentlyCreatedLinksList from '../../components/UI/Lists/RecentlyCreatedLinksList/RecentlyCreatedLinksList';
-
 import {
   ShortenerDiv,
+  ShortenerContainer,
+  RecentlyCreatedLinksListDiv,
+  TitleFormDiv,
   Form,
   Input,
-  Button
-} from '../../styles/pages/create-shortened-link/CreateShortenedLink';
+  ShortenerButton,
+  ShortenerTitle
+} from '../../../../styles/pages/home/Home';
+import RecentlyCreatedLinksList from '../../../../components/UI/Lists/RecentlyCreatedLinksList/RecentlyCreatedLinksList';
 
 import {
   createLink,
   clearLink
-} from '../../store/actions/link/link';
+} from '../../../../store/actions/link/link';
 
 const mapStateToProps = (state) => {
   const { link, user } = state;
@@ -28,7 +30,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const CreateShortenedLink = ({ link, user }) => {
+const ShortenerForm = ({ link, user }) => {
   const [urlToShorten, setUrlToShorten] = useState('');
   const [warning, setWarning] = useState(false);
 
@@ -89,22 +91,30 @@ const CreateShortenedLink = ({ link, user }) => {
     setUrlToShorten(e.target.value);
   }
 
+
   return (
-    <Layout>
+    <>
       <ShortenerDiv>
-        <Form onSubmit={onSubmit}>
-          <Input
-            type='text'
-            placeholder='URL Shortener'
-            onChange={onChangeURl}
-            warning={warning}
-          />
-          <Button type='submit'>Shorten</Button>
-        </Form>
-        <RecentlyCreatedLinksList links={createdLinksArray} />
+        <ShortenerContainer>
+          <TitleFormDiv className='containerWidth'>
+            <ShortenerTitle>Shorten your link</ShortenerTitle>
+            <Form onSubmit={onSubmit}>
+              <Input
+                type='text'
+                placeholder='URL Shortener'
+                onChange={onChangeURl}
+                warning={warning}
+              />
+              <ShortenerButton type='submit'>Shorten</ShortenerButton>
+            </Form>
+          </TitleFormDiv>
+        </ShortenerContainer>
+        <RecentlyCreatedLinksListDiv className='containerWidth'>
+          <RecentlyCreatedLinksList links={createdLinksArray} />
+        </RecentlyCreatedLinksListDiv>
       </ShortenerDiv>
-    </Layout>
+    </>
   )
 }
 
-export default connect(mapStateToProps)(CreateShortenedLink);
+export default connect(mapStateToProps)(ShortenerForm);

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const Navbar = styled.nav`
   height: 60px;
@@ -21,9 +22,10 @@ export const Container = styled.div`
   }
 `;
 
-export const Brand = styled.h1`
+export const Brand = styled(Link)`
   font-size: 1.5em;
   color: #fff;
+  text-decoration: none;
 `;
 
 export const SkipAd = styled.button`

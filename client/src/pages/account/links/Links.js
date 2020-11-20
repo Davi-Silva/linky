@@ -34,7 +34,7 @@ const Links = ({ links, user }) => {
 
   return (
     <Layout>
-      <Wrapper>
+      <Wrapper className='containerWidth'>
         <H1>My Links</H1>
         {!_.isEmpty(links.data) && !links.loading && !links.error && links.fetched && (
           <RecentlyCreatedLinksList links={links.data} />

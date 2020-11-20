@@ -15,12 +15,12 @@ const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route path='/' exact component={Home} />
-        <Route path='/l/:id' exact component={Link} />
+        <Route path='/:id' exact component={Link} />
         <Route path='/invalid/link' exact  component={InvalidLink} />
-        <ProtectedRoute path='/account' exact  component={Account} />
+        <ProtectedRoute path='/account/dashboard' exact  component={Account} />
         <ProtectedRoute path='/account/links' exact  component={AccountLinks} />
         <ProtectedRoute path='/reset-password/:id' exact  component={ResetPassword} />
-        <ProtectedRoute path='/create' exact  component={CreateShortenedLink} />
+        <ProtectedRoute path='/link/create' exact  component={CreateShortenedLink} />
       </Switch>
     </BrowserRouter>
   )

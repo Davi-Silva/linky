@@ -20,7 +20,7 @@ const Link = ({ match, history, link }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getLink(match.url.substring(3, match.url.length)));
+    dispatch(getLink(match.url.substring(1, match.url.length)));
   }, []);
 
   useEffect(() => {
