@@ -16,6 +16,25 @@ import ResetPasswordForm from '../Modals/ResetPasswordForm/ResetPasswordForm';
 import UserModal from '../Modals/UserModal/UserModal';
 import UserDrawer from '../Modals/UserDrawer/UserDrawer';
 
+import {
+  getDimensions, setIsMobile
+} from '../../../store/actions/app/app';
+import {
+  closeLoginForm,
+  closeRegisterForm,
+  closeResetPasswordForm,
+  closeUserDrawer,
+  closeUserModal,
+  openLoginForm,
+  openRegisterForm,
+  openResetPasswordForm,
+  openUserDrawer,
+  toggleLoginForm,
+  toggleRegisterForm,
+  toggleResetPasswordForm,
+  toggleUserModal
+} from '../../../store/actions/navbar/navbar'
+
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
   useLayoutEffect(() => {
@@ -30,40 +49,37 @@ const useWindowSize = () => {
 }
 
 const mapStateToProps = (state) => {
-  const { user } = state;
+  const { user, app, navbar } = state;
 
   return {
-    user
+    user,
+    app,
+    navbar
   }
 }
 
-const NavigationBar = ({ user }) => {
-  const [openLoginForm, setOpenLoginForm] = useState(false);
-  const [openRegisterForm, setOpenRegisterForm] = useState(false);
-  const [openResetPassword, setOpenResetPassword] = useState(false);
-  const [openUserModal, setOpenUserModal] = useState(false);
-  const [openUserDrawer, setOpenUserDrawer] = useState(false);
+const NavigationBar = ({ user, app, navbar }) => {
+  const dispatch = useDispatch();
 
-  const [isMobile, setIsMobile] = useState(false);
-  const [width, height] = useWindowSize();
+  dispatch(getDimensions(useWindowSize()));
 
   useEffect(() => {
-    if (openUserModal) {
-      setOpenUserDrawer(openUserModal);
+    if (navbar.openUserModal) {
+      dispatch(openUserDrawer())
     } else {
       setTimeout(() => {
-        setOpenUserDrawer(openUserModal);
+        dispatch(closeUserDrawer())
       }, 250);
     }
-  }, [openUserModal]);
+  }, [navbar.openUserModal]);
 
   useEffect(() => {
-    if (width <= 880) {
-      setIsMobile(true)
+    if (app.dimensions[0] <= 670) {
+      dispatch(setIsMobile(true));
     } else {
-      setIsMobile(false)
+      dispatch(setIsMobile(false));
     }
-  }, [width])
+  }, [app.dimensions])
 
   useEffect(() => {
     if (!_.isEmpty(user.data)) {
@@ -72,65 +88,66 @@ const NavigationBar = ({ user }) => {
   }, [user]);
 
   const handleToggleLoginForm = () => {
-    setOpenLoginForm(!openLoginForm);
+    dispatch(toggleLoginForm(navbar.openLoginForm));
   }
 
   const handleToggleRegisterForm = () => {
-    setOpenRegisterForm(!openRegisterForm);
+    dispatch(toggleRegisterForm(navbar.openRegisterForm));
   }
 
   const handleToggleResetPasswordForm = () => {
-    setOpenResetPassword(!openResetPassword);
+    console.log('navbar.openResetPasswordForm:', navbar.openResetPasswordForm)
+    dispatch(toggleResetPasswordForm(navbar.openResetPasswordForm))
   }
 
   const handleToggleUserModalForm = () => {
-    setOpenUserModal(!openUserModal);
+    dispatch(toggleUserModal(navbar.openUserModal))
   }
 
   const handleOpenLoginForm = () => {
-    setOpenLoginForm(true);
-    setOpenRegisterForm(false);
-    setOpenResetPassword(false);
+    dispatch(openLoginForm());
+    dispatch(closeRegisterForm());
+    dispatch(closeResetPasswordForm())
   }
 
   const handleOpenRegisterForm = () => {
-    setOpenLoginForm(false);
-    setOpenRegisterForm(true);
-    setOpenResetPassword(false);
+    dispatch(closeLoginForm());
+    dispatch(openRegisterForm());
+    dispatch(closeResetPasswordForm())
   }
 
   const handleOpenResetPasswordForm = () => {
-    setOpenLoginForm(false);
-    setOpenRegisterForm(false);
-    setOpenResetPassword(true);
+    dispatch(closeLoginForm());
+    dispatch(closeRegisterForm());
+    dispatch(openResetPasswordForm())
   }
 
   const closeAllForms = () => {
-    setOpenLoginForm(false);
-    setOpenRegisterForm(false);
-    setOpenResetPassword(false);
-    setOpenUserModal(false);
+    dispatch(closeLoginForm());
+    dispatch(closeRegisterForm());
+    dispatch(closeResetPasswordForm())
+    dispatch(closeUserModal())
   }
 
   return (
     <>
       {_.isEmpty(user.data) && (
         <>
-          {openLoginForm && (
+          {navbar.openLoginForm && (
             <LoginForm
               handleToggleLoginForm={handleToggleLoginForm}
               handleOpenRegisterForm={handleOpenRegisterForm}
               handleOpenResetPasswordForm={handleOpenResetPasswordForm}
             />
           )}
-          {openRegisterForm && (
+          {navbar.openRegisterForm && (
             <RegisterForm
               handleOpenLoginForm={handleOpenLoginForm}
               handleOpenResetPasswordForm={handleOpenResetPasswordForm}
               handleToggleRegisterForm={handleToggleRegisterForm}
             />
           )}
-          {openResetPassword && (
+          {navbar.openResetPasswordForm && (
             <ResetPasswordForm
               handleOpenLoginForm={handleOpenLoginForm}
               handleToggleResetPasswordForm={handleToggleResetPasswordForm}
@@ -154,10 +171,10 @@ const NavigationBar = ({ user }) => {
                   onClick={() => handleToggleLoginForm()}
                 >Login</Login>
               )}
-              {!_.isEmpty(user.data) && !isMobile && openUserModal && <UserModal />}
-              {isMobile && <UserDrawer
-                openUserModal={openUserModal}
-                openUserDrawer={openUserDrawer}
+              {!_.isEmpty(user.data) && !app.isMobile && navbar.openUserModal && <UserModal />}
+              {app.isMobile && <UserDrawer
+                openUserModal={navbar.openUserModal}
+                openUserDrawer={navbar.openUserDrawer}
                 handleToggleUserModalForm={handleToggleUserModalForm}
               />}
             </>

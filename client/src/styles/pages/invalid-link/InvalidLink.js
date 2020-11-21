@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const InvalidPage = styled.div`
   height: 100vh;
   width: 100%;
-  background: #68ff55;
+  background: #68ff5594;
   display: flex;
   flex-direction: flex;
   align-items: center;

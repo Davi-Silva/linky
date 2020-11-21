@@ -48,6 +48,9 @@ export const DrawerDiv = styled.div`
   ${(props) => props.openUserModal ? openDrawer : closeDrawer};
   overflow: hidden;
   z-index: 9999;
+  @media (max-height: 225px) {
+    overflow-y: scroll; 
+  }
 `;
 
 export const List = styled.div`
@@ -83,6 +86,7 @@ export const LogoutButton = styled.button`
   color: #fff;
   margin-left: 15px;
   margin-top: 15px;
+  margin-bottom: 15px;
   cursor: pointer;
   transition: all .2s ease-in-out;
   &:focus {

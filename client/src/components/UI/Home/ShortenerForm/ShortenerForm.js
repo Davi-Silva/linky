@@ -20,6 +20,9 @@ import {
   createLink,
   clearLink
 } from '../../../../store/actions/link/link';
+import {
+  openLoginForm,
+} from '../../../../store/actions/navbar/navbar';
 
 const mapStateToProps = (state) => {
   const { link, user } = state;
@@ -77,13 +80,17 @@ const ShortenerForm = ({ link, user }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (validateInput()) {
-      const sanitizedData = sanitizsHtmlAndGetUrl();
-      if (sanitizedData === undefined) {
-        setWarning(true);
-      } else {
-        dispatch(createLink(user.data._id, sanitizedData));
+    if (!_.isEmpty(user.data) && !user.loading && !user.error && user.fetched) {
+      if (validateInput()) {
+        const sanitizedData = sanitizsHtmlAndGetUrl();
+        if (sanitizedData === undefined) {
+          setWarning(true);
+        } else {
+          dispatch(createLink(user.data._id, sanitizedData));
+        }
       }
+    } else {
+      dispatch(openLoginForm());
     }
   }
 

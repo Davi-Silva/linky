@@ -17,7 +17,21 @@ export const FormDiv = styled.div`
   background: #fff;
   padding: 20px;
   border-radius: 6px;
-  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px, rgba(0, 0, 0, 0.15) 0px 0px 2px; 
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px, rgba(0, 0, 0, 0.15) 0px 0px 2px;
+  z-index: 9;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  @media (max-height: 520px) {
+    max-height: 85%;
+    overflow-y: scroll; 
+  }
+  @media (max-height: 440px) {
+    max-height: 80%;
+  }
+  @media (max-height: 440px) {
+    max-height: 75%;
+  }
 `;
 
 export const Heading = styled.h1`
