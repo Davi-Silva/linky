@@ -3,6 +3,7 @@ import { useDispatch, connect } from 'react-redux';
 import sanitizeHtml from 'sanitize-html';
 import getUrls from 'get-urls';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import Layout from '../../components/Layout';
 import RecentlyCreatedLinksList from '../../components/UI/Lists/RecentlyCreatedLinksList/RecentlyCreatedLinksList';
@@ -91,6 +92,9 @@ const CreateShortenedLink = ({ link, user }) => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>Create - Linky</title>
+      </Helmet>
       <ShortenerDiv>
         <Form onSubmit={onSubmit}>
           <Input

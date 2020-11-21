@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import Layout from '../../../components/Layout';
 import RecentlyCreatedLinksList from '../../../components/UI/Lists/RecentlyCreatedLinksList/RecentlyCreatedLinksList';
@@ -34,6 +35,9 @@ const Links = ({ links, user }) => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>My Links | My Account - Linky</title>
+      </Helmet>
       <Wrapper className='containerWidth'>
         <H1>My Links</H1>
         {!_.isEmpty(links.data) && !links.loading && !links.error && links.fetched && (

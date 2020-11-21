@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 
 import Layout from '../../components/Layout';
 import Hero from '../../components/UI/Home/Hero/Hero';
@@ -8,6 +9,9 @@ import Description from '../../components/UI/Home/Description/Description';
 const Home = () => {
   return (
     <Layout>
+      <Helmet>
+        <title>Home - Linky</title>
+      </Helmet>
       <Hero />
       <ShortenerForm />
       <Description />

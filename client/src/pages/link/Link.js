@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { connect, useDispatch } from 'react-redux';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import { getLink } from '../../store/actions/link/link';
 
@@ -38,6 +39,9 @@ const Link = ({ match, history, link }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Shortened URL - Linky</title>
+      </Helmet>
       <AdNavbar handleRedirectToURL={handleRedirectToURL} />
       <h1>{redirectURL}</h1>
     </>

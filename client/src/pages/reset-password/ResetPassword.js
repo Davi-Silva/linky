@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import Helmet from 'react-helmet';
 
 const ResetPassword = ({ match }) => {
   const [id, setId] = useState();
@@ -9,6 +10,9 @@ const ResetPassword = ({ match }) => {
 
   return (
     <div>
+      <Helmet>
+        <title>Reset Password - Linky</title>
+      </Helmet>
       <h1>Reset Password: {id}</h1>
     </div>
   )

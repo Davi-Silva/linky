@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from '../../components/Layout';
+import Helmet from 'react-helmet';
 
 import {
   InvalidPage,
@@ -9,6 +10,9 @@ import {
 const InvalidLink = () => {
   return (
     <Layout>
+      <Helmet>
+        <title>Invalid Link - Linky</title>
+      </Helmet>
       <InvalidPage className='fullWidth'>
         <ErrorMsg>
           <p>Invalid Link</p>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import Layout from '../../components/Layout';
 import _ from 'lodash';
+import Helmet from 'react-helmet';
 
 import DateFormatter from '../../utils/dateFormatter';
 
@@ -55,6 +56,9 @@ const Account = ({ user }) => {
 
   return (
     <Layout>
+      <Helmet>
+        <title>My Account - Linky</title>
+      </Helmet>
       <Wrapper className='containerWidth'>
         {!_.isEmpty(user.data) && !user.loading && !user.error && user.fetched && (
           <MyAccountListContainer>
