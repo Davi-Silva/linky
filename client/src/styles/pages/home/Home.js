@@ -44,6 +44,28 @@ export const Subtitle = styled.h2`
 
 export const SvgImg = styled.img`
   height: 250px;
+  @media (max-width: 500px) {
+    height: 200px;
+  }
+  @media (max-width: 390px) {
+    height: 170px;
+  }
+  @media (max-width: 310px) {
+    height: 120px;
+  }
+`;
+
+export const DevFocusSvgImg = styled.img`
+  width: 300px;
+  @media (max-width: 500px) {
+    width: 260px;
+  }
+  @media (max-width: 390px) {
+    width: 210px;
+  }
+  @media (max-width: 310px) {
+    width: 180px;
+  }
 `;
 
 export const ArrowDown = styled.div`
@@ -150,5 +172,55 @@ export const ShortenerButton = styled.button`
   }
   @media (max-width: 580px) {
     border-radius: 4px;
+  }
+`;
+
+export const DescriptionDiv = styled.div`
+  width: 100%;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  @media (max-width: 1200px) {
+    justify-content: space-between;
+  }
+  @media (max-width: 670px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const TitleSubtitleDescriptionDiv = styled.div`
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 30px;
+  @media (max-width: 915px) {
+    margin-left: 30px;
+  }
+  @media (max-width: 670px) {
+    margin-left: 0px;
+    margin-top: 30px;
+  }
+`;
+
+export const TitleDescription = styled.h1`
+  color: #33ab33;
+  font-size: 20px;
+  margin-bottom: 0.5rem;
+  @media (max-width: 670px) {
+    text-align: center;
+  }
+  @media (max-width: 500px) {
+    font-size: 18px;
+  }
+`;
+
+export const SubtitleDescription = styled.h2`
+  color: #888888;
+  font-size: 16px;
+  @media (max-width: 670px) {
+    text-align: center;
   }
 `;
