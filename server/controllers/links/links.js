@@ -28,7 +28,8 @@ module.exports = {
 
   indexByUser: async (req, res) => {
     try {
-      const { userId } = req.query;
+      const { userId } = req.params;
+      console.log('userId:', userId)
 
       let errors = [];
 
@@ -61,6 +62,45 @@ module.exports = {
       return res.status(200).send({
         status_code: 200,
         results: allLink
+      })
+
+    } catch (err) {
+      return res.status(500).send({
+        status_code: 500,
+        results: [],
+        errors: [err.message]
+      });
+    }
+  },
+
+  getNumberOfLinks: async (req, res) => {
+    try {
+      const { userId } = req.query;
+
+      let errors = [];
+
+      if (userId === undefined) {
+        errors.push('userId is required.');
+      }
+      if (userId.length === 0) {
+        errors.push('userId must be valid.');
+      }
+
+      if (errors.length > 0) {
+        return res.status(400).send({
+          status_code: 400,
+          results: [],
+          errors
+        });
+      }
+
+      const allLinks = await Link.find({
+        user: userId
+      });
+
+      return res.status(200).send({
+        status_code: 200,
+        results: allLinks.length
       })
 
     } catch (err) {

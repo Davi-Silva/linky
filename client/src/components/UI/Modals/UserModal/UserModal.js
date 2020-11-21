@@ -9,12 +9,16 @@ import {
 } from "../../../../styles/components/UI/Modals/UserModal/UserModal";
 
 import { logoutUser } from '../../../../store/actions/user/user';
+import { clearLink } from '../../../../store/actions/link/link';
+import { clearLinks } from '../../../../store/actions/links/links';
 
 const UserModal = () => {
   const dispatch = useDispatch();
 
   const handleLogoutUser = () => {
-    dispatch(logoutUser())
+    dispatch(logoutUser());
+    dispatch(clearLink());
+    dispatch(clearLinks());
   }
 
   return (

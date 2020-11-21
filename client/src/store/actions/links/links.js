@@ -6,3 +6,9 @@ export function getLinks(userId) {
     }
   };
 }
+
+export function clearLinks() {
+  return {
+    type: 'CLEAR_LINKS',
+  };
+}

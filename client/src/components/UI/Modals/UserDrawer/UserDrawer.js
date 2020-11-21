@@ -1,6 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import {
   Background,
@@ -11,12 +12,25 @@ import {
 } from '../../../../styles/components/UI/Modals/UserDrawer/UserDrawer';
 
 import { logoutUser } from '../../../../store/actions/user/user';
+import { clearLink } from '../../../../store/actions/link/link';
+import { clearLinks } from '../../../../store/actions/links/links';
 
-const UserDrawer = ({ openUserModal, openUserDrawer, handleToggleUserModalForm }) => {
+
+const mapStateToProps = (state) => {
+  const { user } = state;
+
+  return {
+    user
+  }
+}
+
+const UserDrawer = ({ openUserModal, openUserDrawer, handleToggleUserModalForm, user }) => {
   const dispatch = useDispatch();
 
   const handleLogoutUser = () => {
-    dispatch(logoutUser())
+    dispatch(logoutUser());
+    dispatch(clearLink());
+    dispatch(clearLinks());
   }
 
   return (
@@ -45,7 +59,9 @@ const UserDrawer = ({ openUserModal, openUserDrawer, handleToggleUserModalForm }
                 Create
               </ListItem>
             </List>
-            <LogoutButton onClick={() => handleLogoutUser()} >Log out</LogoutButton>
+            {!_.isEmpty(user.data) && !user.loading && !user.error && user.fetched && (
+              <LogoutButton onClick={() => handleLogoutUser()} >Log out</LogoutButton>
+            )}
           </DrawerDiv>
         </>
       )}
@@ -56,7 +72,8 @@ const UserDrawer = ({ openUserModal, openUserDrawer, handleToggleUserModalForm }
 UserDrawer.propTypes = {
   openUserModal: PropTypes.bool.isRequired,
   openUserDrawer: PropTypes.bool.isRequired,
-  handleToggleUserModalForm: PropTypes.func.isRequired
+  handleToggleUserModalForm: PropTypes.func.isRequired,
+  user: PropTypes.shape().isRequired
 }
 
-export default UserDrawer
+export default connect(mapStateToProps)(UserDrawer);
