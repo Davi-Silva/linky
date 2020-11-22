@@ -10,6 +10,7 @@ const createLink = async (userId, url) => {
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.localStorage.getItem('accessToken')}`
       },
       body: JSON.stringify({ userId, originalURL: url })
     }

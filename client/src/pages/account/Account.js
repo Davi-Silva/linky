@@ -37,10 +37,12 @@ const Account = ({ user }) => {
         credentials: 'same-origin',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${window.localStorage.getItem('accessToken')}`
         },
       }
     );
     const data = await res.json();
+    console.log('data:', data)
     if (data.status_code === 200) {
       setLinksLength(data.results)
     }

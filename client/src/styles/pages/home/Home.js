@@ -177,7 +177,7 @@ export const ShortenerButton = styled.button`
 
 export const DescriptionDiv = styled.div`
   width: 100%;
-  padding: 80px 0;
+  padding: 90px 0;
   display: flex;
   flex-direction: row;
   align-items: center;

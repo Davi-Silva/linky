@@ -10,5 +10,5 @@ export const FooterDiv = styled.div`
 export const Copyright = styled.p`
   color: #fff;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
 `;

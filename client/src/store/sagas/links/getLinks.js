@@ -10,6 +10,7 @@ const getLinks = async (userId) => {
       credentials: 'same-origin',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${window.localStorage.getItem('accessToken')}`
       },
     }
   );
