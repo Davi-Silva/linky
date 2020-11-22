@@ -7,7 +7,8 @@ import DevFocus from '../../assets/img/dev_focus.svg';
 
 import { getLink } from '../../store/actions/link/link';
 
-import AdNavbar from '../../components/UI/AdNavbar/AdNavbar'
+import AdNavbar from '../../components/UI/AdNavbar/AdNavbar';
+import Ad from '../../components/UI/Ad/Ad';
 
 const mapStateToProps = (state) => {
   const { link } = state;
@@ -80,7 +81,7 @@ const Link = ({ match, history, link }) => {
         />
       </Helmet>
       <AdNavbar handleRedirectToURL={handleRedirectToURL} />
-      <h1>{redirectURL}</h1>
+      <Ad />
     </>
   )
 }
