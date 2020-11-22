@@ -20,7 +20,6 @@ module.exports = (req, res, next) => {
 
     jwt.verify(authorization[1], process.env.ACCESS_TOKEN_SECRET, async (error, decoded) => {
       if (error) {
-        console.error(error)
         return res.status(401).send({
           status_code: 401,
           results: {},
@@ -43,7 +42,6 @@ module.exports = (req, res, next) => {
       next();
     });
   } catch (err) {
-    console.error(err)
     return res.status(401).send({
       status_code: 401,
       results: {},
