@@ -1,24 +1,22 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import _ from 'lodash';
+import React, { useState, useEffect, useLayoutEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import _ from "lodash";
 
 import {
   Brand,
   Container,
   Login,
   UserButton,
-  Navbar
-} from '../../../styles/components/UI/Navbar/Navbar';
+  Navbar,
+} from "../../../styles/components/UI/Navbar/Navbar";
 
-import LoginForm from '../Modals/LoginForm/LoginForm';
-import RegisterForm from '../Modals/RegisterForm/RegisterForm';
-import ResetPasswordForm from '../Modals/ResetPasswordForm/ResetPasswordForm';
-import UserModal from '../Modals/UserModal/UserModal';
-import UserDrawer from '../Modals/UserDrawer/UserDrawer';
+import LoginForm from "../Modals/LoginForm/LoginForm";
+import RegisterForm from "../Modals/RegisterForm/RegisterForm";
+import ResetPasswordForm from "../Modals/ResetPasswordForm/ResetPasswordForm";
+import UserModal from "../Modals/UserModal/UserModal";
+import UserDrawer from "../Modals/UserDrawer/UserDrawer";
 
-import {
-  getDimensions, setIsMobile
-} from '../../../store/actions/app/app';
+import { getDimensions, setIsMobile } from "../../../store/actions/app/app";
 import {
   closeLoginForm,
   closeRegisterForm,
@@ -32,8 +30,8 @@ import {
   toggleLoginForm,
   toggleRegisterForm,
   toggleResetPasswordForm,
-  toggleUserModal
-} from '../../../store/actions/navbar/navbar'
+  toggleUserModal,
+} from "../../../store/actions/navbar/navbar";
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -41,12 +39,12 @@ const useWindowSize = () => {
     function updateSize() {
       setSize([window.innerWidth, window.innerHeight]);
     }
-    window.addEventListener('resize', updateSize);
+    window.addEventListener("resize", updateSize);
     updateSize();
-    return () => window.removeEventListener('resize', updateSize);
+    return () => window.removeEventListener("resize", updateSize);
   }, []);
   return size;
-}
+};
 
 const mapStateToProps = (state) => {
   const { user, app, navbar } = state;
@@ -54,9 +52,9 @@ const mapStateToProps = (state) => {
   return {
     user,
     app,
-    navbar
-  }
-}
+    navbar,
+  };
+};
 
 const NavigationBar = ({ user, app, navbar }) => {
   const dispatch = useDispatch();
@@ -65,10 +63,10 @@ const NavigationBar = ({ user, app, navbar }) => {
 
   useEffect(() => {
     if (navbar.openUserModal) {
-      dispatch(openUserDrawer())
+      dispatch(openUserDrawer());
     } else {
       setTimeout(() => {
-        dispatch(closeUserDrawer())
+        dispatch(closeUserDrawer());
       }, 250);
     }
   }, [navbar.openUserModal]);
@@ -79,7 +77,7 @@ const NavigationBar = ({ user, app, navbar }) => {
     } else {
       dispatch(setIsMobile(false));
     }
-  }, [app.dimensions])
+  }, [app.dimensions]);
 
   useEffect(() => {
     if (!_.isEmpty(user.data)) {
@@ -89,45 +87,45 @@ const NavigationBar = ({ user, app, navbar }) => {
 
   const handleToggleLoginForm = () => {
     dispatch(toggleLoginForm(navbar.openLoginForm));
-  }
+  };
 
   const handleToggleRegisterForm = () => {
     dispatch(toggleRegisterForm(navbar.openRegisterForm));
-  }
+  };
 
   const handleToggleResetPasswordForm = () => {
-    console.log('navbar.openResetPasswordForm:', navbar.openResetPasswordForm)
-    dispatch(toggleResetPasswordForm(navbar.openResetPasswordForm))
-  }
+    console.log("navbar.openResetPasswordForm:", navbar.openResetPasswordForm);
+    dispatch(toggleResetPasswordForm(navbar.openResetPasswordForm));
+  };
 
   const handleToggleUserModalForm = () => {
-    dispatch(toggleUserModal(navbar.openUserModal))
-  }
+    dispatch(toggleUserModal(navbar.openUserModal));
+  };
 
   const handleOpenLoginForm = () => {
     dispatch(openLoginForm());
     dispatch(closeRegisterForm());
-    dispatch(closeResetPasswordForm())
-  }
+    dispatch(closeResetPasswordForm());
+  };
 
   const handleOpenRegisterForm = () => {
     dispatch(closeLoginForm());
     dispatch(openRegisterForm());
-    dispatch(closeResetPasswordForm())
-  }
+    dispatch(closeResetPasswordForm());
+  };
 
   const handleOpenResetPasswordForm = () => {
     dispatch(closeLoginForm());
     dispatch(closeRegisterForm());
-    dispatch(openResetPasswordForm())
-  }
+    dispatch(openResetPasswordForm());
+  };
 
   const closeAllForms = () => {
     dispatch(closeLoginForm());
     dispatch(closeRegisterForm());
-    dispatch(closeResetPasswordForm())
-    dispatch(closeUserModal())
-  }
+    dispatch(closeResetPasswordForm());
+    dispatch(closeUserModal());
+  };
 
   return (
     <>
@@ -158,31 +156,36 @@ const NavigationBar = ({ user, app, navbar }) => {
       <Navbar>
         <Container>
           <div>
-            <Brand to='/'>Link</Brand>
+            <Brand to="/">Linky</Brand>
           </div>
           <div>
             <>
-              {!_.isEmpty(user.data) && !user.loading && !user.error && user.fetched ? (
+              {!_.isEmpty(user.data) &&
+              !user.loading &&
+              !user.error &&
+              user.fetched ? (
                 <UserButton
                   onClick={() => handleToggleUserModalForm()}
                 >{`${user.data.names.firstName} ${user.data.names.lastName}`}</UserButton>
               ) : (
-                <Login
-                  onClick={() => handleToggleLoginForm()}
-                >Login</Login>
+                <Login onClick={() => handleToggleLoginForm()}>Login</Login>
               )}
-              {!_.isEmpty(user.data) && !app.isMobile && navbar.openUserModal && <UserModal />}
-              {app.isMobile && <UserDrawer
-                openUserModal={navbar.openUserModal}
-                openUserDrawer={navbar.openUserDrawer}
-                handleToggleUserModalForm={handleToggleUserModalForm}
-              />}
+              {!_.isEmpty(user.data) &&
+                !app.isMobile &&
+                navbar.openUserModal && <UserModal />}
+              {app.isMobile && (
+                <UserDrawer
+                  openUserModal={navbar.openUserModal}
+                  openUserDrawer={navbar.openUserDrawer}
+                  handleToggleUserModalForm={handleToggleUserModalForm}
+                />
+              )}
             </>
           </div>
         </Container>
       </Navbar>
     </>
-  )
-}
+  );
+};
 
 export default connect(mapStateToProps)(NavigationBar);
